@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:open_meteo_api/open_meteo_api.dart' hide Weather;
 import 'package:weather_repository/weather_repository.dart';
 
 class WeatherRepository {
@@ -20,12 +21,6 @@ class WeatherRepository {
       condition: weather.weatherCode.toInt().toCondition,
     );
   }
-}
-
-class OpenMeteoApiClient {
-  locationSearch(String city) {}
-
-  getWeather({required latitude, required longitude}) {}
 }
 
 extension on int {
