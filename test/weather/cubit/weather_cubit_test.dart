@@ -7,6 +7,8 @@ import 'package:mocktail/mocktail.dart';
 import 'package:weather_repository/weather_repository.dart'
     as weather_repository;
 
+import '../../helpers/hydrated_bloc.dart';
+
 const weatherLocation = 'London';
 const weatherCondition = weather_repository.WeatherCondition.rainy;
 const weatherTemperature = 9.8;
@@ -340,10 +342,8 @@ void main() {
     });
   });
 }
-
-void initHydratedStorage() {}
-
 extension on double {
   double toFahrenheit() => (this * 9 / 5) + 32;
   double toCelsius() => (this - 32) * 5 / 9;
 }
+

@@ -5,7 +5,7 @@ import 'package:flutter_weather/theme/cubit/theme_cubit.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:weather_repository/weather_repository.dart';
 
-import '../../weather/cubit/weather_cubit_test.dart';
+import '../../helpers/hydrated_bloc.dart';
 
 // ignore: must_be_immutable
 class MockWeather extends Mock implements Weather {
