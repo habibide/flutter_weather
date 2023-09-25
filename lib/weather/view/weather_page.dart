@@ -52,7 +52,7 @@ class _WeatherViewState extends State<WeatherView> {
         child: BlocConsumer<WeatherCubit, WeatherState>(
           listener: (context, state) {
             if (state.status.isSuccess) {
-              context.read<ThemeCubit>().updateTheme(state.weather as Weather?);
+              context.read<ThemeCubit>().updateTheme(state.weather);
             }
           },
           builder: (context, state) {
