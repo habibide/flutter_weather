@@ -1,0 +1,14 @@
+
+workflows:
+  android-workflow-id:
+    name: Android Weather
+    # .......
+    # .......
+    # .......
+  ios-workflow-id:
+    name: iOS Weather
+    # ......
+
+  weather-workflow:
+        environment:
+          flutter: stable
