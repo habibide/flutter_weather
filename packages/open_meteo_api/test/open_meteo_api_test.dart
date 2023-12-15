@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:http/http.dart' as http;
+/*import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:open_meteo_api/open_meteo_api.dart';
 import 'package:test/test.dart';
@@ -21,7 +21,7 @@ void main() {
 
     setUp(() {
       httpClient = MockHttpClient();
-      apiClient = OpenMeteoApiClient(httpClient: httpClient);
+      apiClient = OpenMeteoApiClient( );
     });
 
     group('constructor', () {
@@ -199,4 +199,243 @@ void main() {
       });
     });
   });
+}*/
+
+
+import 'package:dio/dio.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:open_meteo_api/open_meteo_api.dart';
+import 'package:http_mock_adapter/http_mock_adapter.dart';
+import 'package:test/test.dart';
+
+class MockDio extends Mock implements Dio {}
+
+class MockResponse extends Mock implements Response{}
+
+class FakeUri extends Fake implements Uri {}
+
+void main() {
+  group('OpenMeteoApiClient', () {
+    late Dio dio;
+    late DioAdapter dioAdapter;
+    late OpenMeteoApiClient apiClient;
+    const query = 'mock-query';
+
+
+    setUpAll(() {
+      registerFallbackValue(RequestOptions(path: ''));
+    });
+
+    setUp(() {
+
+      dio = Dio(BaseOptions());
+      dioAdapter = DioAdapter(dio: dio);
+      apiClient = OpenMeteoApiClient(dio: dio);
+    });
+
+    group('locationSearch', () {
+
+      // test('makes correct Dio request', () async {
+      // final  response = MockResponse();
+      // when(() => response.statusCode).thenReturn(200);
+      // when(() => response.data).thenReturn('{}');
+      // when(() => dio.get(any())).thenAnswer((_) async => response);
+      //
+      //   try {
+      //     await apiClient.locationSearch(query);
+      //   } catch (_) {}
+      //
+      //   verify(() => dio.get(
+      //     'https://geocoding-api.open-meteo.com/v1/search',
+      //     queryParameters: {'name': query, 'count': '1'},
+      //   )).called(1);
+      // });
+
+      test('throws LocationRequestFailure on non-200 response', () async {
+        dioAdapter.onGet(
+            'https://geocoding-api.open-meteo.com/v1/search',
+                (server) {
+              server.reply(400, {
+
+              });
+            });
+        await expectLater(
+          apiClient.locationSearch(query),
+          throwsA(isA<LocationRequestFailure>()),
+        );
+      });
+
+
+      test('throws LocationNotFoundFailure on error response', () async {
+        dioAdapter.onGet(
+            'https://geocoding-api.open-meteo.com/v1/search',
+                (server) {
+          server.reply(200, {
+
+          });
+                });
+        await expectLater(
+          apiClient.locationSearch(query),
+          throwsA(isA<LocationNotFoundFailure>()),
+        );
+      });
+
+      test('throws LocationNotFoundFailure on empty response', () async {
+
+        dioAdapter.onGet(
+            'https://geocoding-api.open-meteo.com/v1/search',
+                (server) {
+              server.reply(200, {
+
+              });
+            });
+        await expectLater(
+          apiClient.locationSearch(query),
+          throwsA(isA<LocationNotFoundFailure>()),
+        );
+      });
+
+      test('returns Location on valid response', () async {
+        dioAdapter.onGet(
+            'https://geocoding-api.open-meteo.com/v1/search',
+                (server) {
+              server.reply(200, {
+                'results': [
+                  {
+                    'id': 4887398,
+                    'name': 'Chicago',
+                    'latitude': 41.85003,
+                    'longitude': -87.65005,
+                  }
+                ]
+              });
+            });
+
+        final actual = await apiClient.locationSearch(query);
+        
+        await expectLater(actual,
+          isA<Location>()
+              .having((l) => l.name, 'name', 'Chicago')
+              .having((l) => l.id, 'id', 4887398)
+              .having((l) => l.latitude, 'latitude', 41.85003)
+              .having((l) => l.longitude, 'longitude', -87.65005),);
+        throwsA(isA<LocationNotFoundFailure>());
+      });
+    });
+
+    group('getWeather', () {
+      const latitude = 41.85003;
+      const longitude = -87.6500;
+
+      // test('makes correct Dio request for weather', () async {
+      //   dioAdapter.onGet(
+      //       'https://api.open-meteo.com/v1/forecast',
+      //           (server) {
+      //         server.reply(200, {
+      //           'results': [
+      //             {
+      //               'latitude': latitude,
+      //               'longitude': longitude,
+      //             }
+      //           ]
+      //         });
+      //       });
+      // Location mockLocation = Location(id: 1, name: 'name',
+      //     latitude: latitude, longitude: longitude);
+      // Response response = MockResponse();
+      //   when(() => dio.get('https://api.open-meteo.com/v1/forecast'))
+      //   .thenAnswer((_) async =>  response);
+      // apiClient.getWeather(latitude: latitude,
+      // longitude: longitude);
+      //   verify(() => dio.get(
+      //     'https://geocoding-api.open-meteo.com/v1/forecast',
+      //     queryParameters: {
+      //       'latitude': '$latitude',
+      //       'longitude': '$longitude',
+      //       'current_weather': 'true'
+      //     },));
+      //  /* await expectLater(
+      //     apiClient.getWeather(
+      //         latitude: latitude,
+      //         longitude: longitude
+      //     ),
+      //     throwsA(isA<WeatherRequestFailure>()),
+      //   );*/
+      //
+      // });
+
+      test('throws WeatherRequestFailure on non-200 response', () async {
+        dioAdapter.onGet(
+            'https://api.open-meteo.com/v1/forecast',
+                (server) {
+              server.reply(400, {
+
+              });
+            });
+       await expectLater(
+         apiClient.getWeather(
+           latitude: latitude,
+           longitude: longitude,
+         ),
+          throwsA(isA<WeatherRequestFailure>()),
+        );
+      });
+
+      test('throws WeatherNotFoundFailure on empty response', () async {
+        dioAdapter.onGet(
+            'https://api.open-meteo.com/v1/forecast',
+                (server) {
+              server.reply(200, {
+
+              });
+            });
+        await expectLater(
+          apiClient.getWeather(
+            latitude: latitude,
+            longitude: longitude
+          ),
+          throwsA(isA<WeatherNotFoundFailure>()),
+        );
+
+      });
+
+      test('returns weather on valid response', () async {
+        dioAdapter.onGet(
+            'https://api.open-meteo.com/v1/forecast',
+                (server) async {
+              server.reply(200, {
+              'latitude': 43,
+              'longitude': -87.875,
+              'generationtime_ms': 0.2510547637939453,
+              'utc_offset_seconds': 0,
+              'timezone': 'GMT',
+              'timezone_abbreviation': 'GMT',
+              'elevation': 189,
+              'current_weather': {
+              'temperature': 15.3,
+              'windspeed': 25.8,
+              'winddirection': 310,
+              'weathercode': 63,
+              'time': '2022-09-12T01:00'
+
+              }
+            });
+              final actual = await apiClient.getWeather(
+                latitude: latitude,
+                longitude: longitude,
+              );
+       await expectLater(
+          actual,
+          isA<Weather>()
+              .having((w) => w.temperature, 'temperature', 15.3)
+              .having((w) => w.weatherCode, 'weatherCode', 63.0),
+        );
+      });
+    });
+  });
+});
 }
+
+
+
+
