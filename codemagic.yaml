@@ -15,10 +15,19 @@ workflows:
       - name: Get Flutter packages
         script: |
           flutter packages pub get
-      - name: Build AAB with Flutter
+      - name: Test All Layers
         script: |
-          flutter build appbundle --release
+          flutter test --coverage test packages/open_meteo_api/test packages/weather_repository/test
+      - name: Flutter Doctor
+        script: |
+          flutter doctor -v
+      - name: Flutter Clean
+        script: |
+          flutter clean
+      - name: Build APK with Flutter
+        script: |
+          flutter build apk --release
     artifacts:
-      - build/**/outputs/**/*.aab
+      - build/**/outputs/**/*.apk
       - build/**/outputs/**/mapping.txt
       - flutter_drive.log
