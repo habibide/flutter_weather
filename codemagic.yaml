@@ -39,6 +39,6 @@ triggers:
       name: "push"
       branch:
         only:
-          - "CI"
           - "main"
           - "develop"
+          - "CI"
