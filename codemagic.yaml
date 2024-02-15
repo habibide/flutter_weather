@@ -21,6 +21,9 @@ workflows:
       - name: Get Flutter packages
         script: |
           flutter packages pub get
+      - name: Flutter analyze
+        script: |
+          flutter analyze
       - name: Test All Layers
         script: |
           flutter test --coverage test packages/open_meteo_api/test packages/weather_repository/test
