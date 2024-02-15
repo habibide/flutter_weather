@@ -28,7 +28,7 @@ class WeatherAppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).textTheme;
+    final textTheme= Theme.of(context).textTheme;
     return BlocBuilder<ThemeCubit, Color>(
       builder: (context, color) {
         return MaterialApp(
@@ -37,7 +37,7 @@ class WeatherAppView extends StatelessWidget {
             primaryColor: color,
             textTheme: GoogleFonts.rajdhaniTextTheme(),
             appBarTheme: AppBarTheme(
-              titleTextStyle: GoogleFonts.rajdhaniTextTheme(theme)
+              titleTextStyle: GoogleFonts.rajdhaniTextTheme(textTheme)
                   .apply(bodyColor: Colors.white)
                   .titleLarge,
             ),
