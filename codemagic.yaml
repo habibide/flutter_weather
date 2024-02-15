@@ -34,3 +34,9 @@ workflows:
       - build/**/outputs/**/*.apk
       - build/**/outputs/**/mapping.txt
       - flutter_drive.log
+triggers:
+  - event:
+      name: "push"
+      branch:
+        only:
+          - "CI"
