@@ -1,7 +1,7 @@
-import 'dart:async';
+/*import 'dart:async';
 import 'dart:convert';
 
-/import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
 import 'package:open_meteo_api/open_meteo_api.dart';
 
 /// Exception thrown when locationSearch fails.
@@ -81,4 +81,93 @@ class OpenMeteoApiClient {
 
     return Weather.fromJson(weatherJson);
   }
+}*/
+
+import 'dart:async';
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:open_meteo_api/open_meteo_api.dart';
+
+/// Exception thrown when locationSearch fails.
+class LocationRequestFailure implements Exception {}
+
+/// Exception thrown when the provided location is not found.
+class LocationNotFoundFailure implements Exception {}
+
+/// Exception thrown when getWeather fails.
+class WeatherRequestFailure implements Exception {}
+
+/// Exception thrown when weather for the provided location is not found.
+class WeatherNotFoundFailure implements Exception {}
+
+class OpenMeteoApiClient {
+  static const _baseUrlWeather = 'api.open-meteo.com';
+  static const _baseUrlGeocoding = 'geocoding-api.open-meteo.com';
+
+  final Dio _dio;
+
+  OpenMeteoApiClient({Dio? dio}) : _dio = dio ?? Dio();
+
+  Future<Location> locationSearch(String query) async {
+    Response response;
+    try {
+      response = await _dio.get(
+        'https://$_baseUrlGeocoding/v1/search',
+        queryParameters: {'name': query, 'count': '1'},
+      );
+    } catch (e) {
+      throw LocationRequestFailure();
+    }
+
+    if (response.statusCode != 200) {
+      throw LocationRequestFailure();
+    }
+
+    final location = response.data;
+
+    if (!location.containsKey('results')) throw LocationNotFoundFailure();
+
+    final results = location['results'];
+
+    if (results.isEmpty) throw LocationNotFoundFailure();
+
+    return Location.fromJson(results.first);
+  }
+
+  Future<Weather> getWeather({
+    required double latitude,
+    required double longitude,
+  }) async {
+    Response response;
+    try {
+      response = await _dio.get(
+        'https://$_baseUrlWeather/v1/forecast',
+        queryParameters: {
+          'latitude': '$latitude',
+          'longitude': '$longitude',
+          'current_weather': 'true'
+        },
+      );
+    } catch (e) {
+      // Handle Dio errors here
+      throw WeatherRequestFailure();
+    }
+      if (response.statusCode != 200) {
+        throw WeatherRequestFailure();
+      }
+
+      final bodyJson = response.data;
+
+      if (!bodyJson.containsKey('current_weather')) {
+        throw WeatherNotFoundFailure();
+      }
+
+      final weatherJson = bodyJson['current_weather'];
+
+      return Weather.fromJson(weatherJson);
+
+  }
+
+
 }
+

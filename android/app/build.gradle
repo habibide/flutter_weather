@@ -2,6 +2,7 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
+
 }
 
 def localProperties = new Properties()
@@ -52,18 +53,18 @@ android {
     }
 
     signingConfigs {
-        release {/*
+        release {
             if (System.getenv()["CI"]) { // CI=true is exported by Codemagic
                 storeFile file(System.getenv()["CM_KEYSTORE_PATH"])
                 storePassword System.getenv()["CM_KEYSTORE_PASSWORD"]
                 keyAlias System.getenv()["CM_KEY_ALIAS"]
                 keyPassword System.getenv()["CM_KEY_PASSWORD"]
             } else {
-                keyAlias keystoreProperties['Weather']
-                keyPassword keystoreProperties['Dart7_@buMustaf']
-                storeFile keystoreProperties['sDart7_@buMustaf'] ? file(keystoreProperties['storeFile']) : null
-                storePassword keystoreProperties['Dart7_@buMustaf']
-            }*/
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+                storePassword keystoreProperties['storePassword']
+            }
         }
     }
 
@@ -80,4 +81,6 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:32.7.2')
+}

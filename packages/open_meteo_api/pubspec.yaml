@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.0
+  dio: ^5.4.0
+  http_mock_adapter: ^0.6.1
   json_annotation: ^4.6.0
 
 dev_dependencies:
