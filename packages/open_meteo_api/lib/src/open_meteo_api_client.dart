@@ -85,7 +85,6 @@ class OpenMeteoApiClient {
 
 import 'dart:async';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:open_meteo_api/open_meteo_api.dart';
 
 /// Exception thrown when locationSearch fails.
