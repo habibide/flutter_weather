@@ -12,18 +12,18 @@ workflows:
       - name: Set up local.properties
         script: |
           echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
-      - name: Get Flutter packages
-        script: |
-          flutter packages pub get
-      - name: Test All Layers
-        script: |
-          flutter test --coverage test packages/open_meteo_api/test packages/weather_repository/test
       - name: Flutter Doctor
         script: |
           flutter doctor -v
       - name: Flutter Clean
         script: |
           flutter clean
+      - name: Get Flutter packages
+        script: |
+          flutter packages pub get
+      - name: Test All Layers
+        script: |
+          flutter test --coverage test packages/open_meteo_api/test packages/weather_repository/test
       - name: Build APK with Flutter
         script: |
           flutter build apk --release
