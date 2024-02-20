@@ -38,7 +38,7 @@ workflows:
         script: |
           flutter build apk --release
     artifacts:
-      - build/**/outputs/**/*.apk
+      - build/app/outputs/flutter-apk/*.apk
       - build/**/outputs/**/mapping.txt
       - flutter_drive.log
     publishing:
@@ -49,3 +49,9 @@ workflows:
         notify:
           success: true
           failure: false
+      firebase:
+        firebase_service_account: weather-app-27e13-f1350e9d24d6.json
+        android:
+          app_id: 1:133119966084:android:95595c1ca11c02c57e7bd1
+          groups:
+            - Jamiil_Tech
