@@ -80,7 +80,7 @@ class _WeatherViewState extends State<WeatherView> {
         onPressed: () async {
           final city = await Navigator.of(context).push(SearchPage.route());
           if (!mounted) return;
-          await context.read<WeatherCubit>().fetchWeather(city);
+          context.read<WeatherCubit>().fetchWeather(city);
         },
       ),
     );
