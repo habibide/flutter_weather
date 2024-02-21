@@ -32,6 +32,11 @@ class WeatherView extends StatefulWidget {
 class _WeatherViewState extends State<WeatherView> {
   @override
   Widget build(BuildContext context) {
+    void navigateAndFetchWeather(BuildContext context) async {
+      final city = await Navigator.of(context).push(SearchPage.route());
+      if (!mounted) return;
+      context.read<WeatherCubit>().fetchWeather(city);
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Flutter Weather'),
@@ -77,11 +82,7 @@ class _WeatherViewState extends State<WeatherView> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.search, semanticLabel: 'Search'),
-        onPressed: () async {
-          final city = await Navigator.of(context).push(SearchPage.route());
-          if (!mounted) return;
-          context.read<WeatherCubit>().fetchWeather(city);
-        },
+        onPressed: () => navigateAndFetchWeather(),
       ),
     );
   }
