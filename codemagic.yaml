@@ -6,6 +6,8 @@ workflows:
     environment:
       android_signing:
         - weathercodemagic
+      groups:
+        - firebase_credentials
       flutter: stable
     triggering:
       events:
@@ -54,3 +56,4 @@ workflows:
           app_id: 1:133119966084:android:95595c1ca11c02c57e7bd1
           groups:
             - Jamiil_Tech
+          artifact_type: 'apk' # Replace with 'aab' to only publish the Android app bundle
