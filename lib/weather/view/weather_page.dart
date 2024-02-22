@@ -78,7 +78,7 @@ class _WeatherViewState extends State<WeatherView> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.search, semanticLabel: 'Search'),
         onPressed: () async {
-          final city = await Navigator.of(context).push(SearchPage.route()).then((value) {
+           await Navigator.of(context).push(SearchPage.route()).then((value) {
             if (mounted) {
               context.read<WeatherCubit>().fetchWeather(value);
             }
