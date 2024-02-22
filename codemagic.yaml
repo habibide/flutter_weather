@@ -51,7 +51,7 @@ workflows:
           success: true
           failure: false
       firebase:
-        firebase_service_account: weather-app-27e13-f1350e9d24d6.json
+        firebase_token: $FIREBASE_TOKEN
         android:
           app_id: 1:133119966084:android:95595c1ca11c02c57e7bd1
           groups:
