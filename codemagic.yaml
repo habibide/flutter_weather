@@ -36,12 +36,15 @@ workflows:
       - name: Build APK with Flutter
         script: |
           flutter build apk --release
-      - name: Decode Google credentials
+      - name: Install fastlane-plugin-firebase_app_distribution
         script: |
-          echo $FIREBASE_SERVICE_ACCOUNT
-      - name: Distribute app to firebase with gradle plugin
+          gem install bundler
+          sudo gem install fastlane-plugin-firebase_app_distribution --user-install
+      - name: Execute fastlane android publishing task
         script: |
-          cd android && ./gradlew appDistributionUploadRelease
+          cd android
+          bundle install
+          bundle exec fastlane <your_android_lane>
     artifacts:
       - build/app/outputs/flutter-apk/*.apk
       - build/**/outputs/**/mapping.txt
