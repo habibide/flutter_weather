@@ -42,16 +42,16 @@ workflows:
       - name: Distribute app to firebase with gradle plugin
         script: |
           cd android && ./gradlew appDistributionUploadRelease
-          android:
-            app_id: 1:133119966084:android:95595c1ca11c02c57e7bd1
-            groups:
-              - Jamiil_Tech
-            artifact_type: 'apk'
     artifacts:
       - build/app/outputs/flutter-apk/*.apk
       - build/**/outputs/**/mapping.txt
       - flutter_drive.log
     publishing:
+#      android:
+#        app_id: 1:133119966084:android:95595c1ca11c02c57e7bd1
+#        groups:
+#          - Jamiil_Tech
+#        artifact_type: 'apk'
       # See the following link for details about email publishing - https://docs.codemagic.io/publishing-yaml/distribution/#email
       email:
         recipients:
@@ -59,4 +59,6 @@ workflows:
         notify:
           success: true
           failure: false
+
+
  # Replace with 'aab' to only publish the Android app bundle
