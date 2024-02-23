@@ -48,7 +48,7 @@ workflows:
         android:
           app_id: 1:133119966084:android:95595c1ca11c02c57e7bd1
           groups:
-            - androidTesters
+            - Jamiil_Tech
       # See the following link for details about email publishing - https://docs.codemagic.io/publishing-yaml/distribution/#email
       email:
         recipients:
