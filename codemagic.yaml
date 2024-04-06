@@ -6,6 +6,8 @@ workflows:
     environment:
       groups:
         - firebase_credentials
+        - google_credentials
+        - google_play
       android_signing:
         - weathercodemagic
       flutter: stable
@@ -50,6 +52,11 @@ workflows:
           groups:
             - Jamiil_Tech
       # See the following link for details about email publishing - https://docs.codemagic.io/publishing-yaml/distribution/#email
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: $GOOGLE_PLAY_TRACK
+        submit_as_draft: true
+
       email:
         recipients:
           - moushab17@gmail.com
