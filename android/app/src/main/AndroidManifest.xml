@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.jamiiltech.weather_app">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.jamiiltech.ihsane_weather">
     <application
         android:label="flutter_weather"
         android:name="${applicationName}"
