@@ -28,7 +28,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.flutter_weather"
+    namespace "com.jamiiltech.ihsane_weather"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
