@@ -6,6 +6,7 @@ workflows:
     environment:
       groups:
         - firebase_credentials
+        - google_credentials
       android_signing:
         - weathercodemagic
       flutter: stable
@@ -41,9 +42,10 @@ workflows:
     artifacts:
       - build/app/outputs/flutter-apk/*.apk
       - build/**/outputs/**/*.aab
-      - build/**/outputs/**/mapping.txt
-      - flutter_drive.log
     publishing:
+      google_play:
+        track: alpha
+        credentials: $GOOGLE_PLAY_SERVICE_ACCOUNT
       firebase:
         firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
         android:
