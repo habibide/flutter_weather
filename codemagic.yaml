@@ -48,7 +48,7 @@ workflows:
         #track: internal
         #credentials: $GOOGLE_PLAY_SERVICE_ACCOUNT
       firebase:
-        firebase_service_account: $FIREBASE_TOKEN
+        firebase_service_account: $GOOGLE_APPLICATION_CREDENTIALS
         android:
           app_id: 1:782776044559:android:ccea9ba085ff1892c5e77a
           groups:
