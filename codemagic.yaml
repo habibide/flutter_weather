@@ -38,10 +38,14 @@ workflows:
           flutter test --coverage test packages/open_meteo_api/test packages/weather_repository/test
       - name: Build APK with Flutter
         script: |
-          flutter build apk --release
+          BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))      
+          flutter build appbundle --release \
+            --build-name=1.0.$BUILD_NUMBER \
+            --build-number=$BUILD_NUMBER
+        #flutter build apk --release
     artifacts:
       #- build/app/outputs/flutter-apk/*.apk
-      - build/app/outputs/flutter-aab/*.aab
+      - build/**/outputs/**/*.aab
     publishing:
       #google_play:
         #track: internal
