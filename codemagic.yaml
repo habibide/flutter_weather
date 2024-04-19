@@ -6,7 +6,7 @@ workflows:
     environment:
       groups:
         - firebase_credentials
-
+        - google_credentials
       android_signing:
         - weathercodemagic
       flutter: stable
