@@ -44,9 +44,9 @@ workflows:
       - build/app/outputs/flutter-apk/*.apk
       - build/**/outputs/**/*.aab
     publishing:
-      #google_play:
-        #track: internal
-        #credentials: $GOOGLE_PLAY_SERVICE_ACCOUNT
+      google_play:
+        track: internal
+        credentials: $GOOGLE_PLAY_SERVICE_ACCOUNT
       firebase:
         firebase_service_account: $GOOGLE_APPLICATION_CREDENTIALS
         android:
