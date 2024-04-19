@@ -18,6 +18,12 @@ workflows:
           include: true
           source: true
     scripts:
+      - name: Distribute app to firebase with gradle plugin
+        script: |
+          cd android && ./gradlew appDistributionUploadRelease
+      - name: Decode Google credentials
+        script: |
+          echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
       - name: Set up local.properties
         script: |
           echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
