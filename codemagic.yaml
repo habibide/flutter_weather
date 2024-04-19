@@ -45,7 +45,7 @@ workflows:
     publishing:
       google_play:
         track: internal
-        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        credentials: $GOOGLE_PLAY_SERVICE_ACCOUNT
       firebase:
         firebase_service_account: $FIREBASE_TOKEN
         android:
