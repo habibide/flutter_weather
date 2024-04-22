@@ -55,9 +55,9 @@ workflows:
             - Ihsane_Tech
       # See the following link for details about email publishing - https://docs.codemagic.io/publishing-yaml/distribution/#email
 
-     # email:
-        #recipients:
-          #- moushab17@gmail.com
-        #notify:
-         # success: true
-          #failure: false
+      email:
+        recipients:
+          - moushab17@gmail.com
+        notify:
+          success: true
+          failure: false
