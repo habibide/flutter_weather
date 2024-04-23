@@ -50,9 +50,9 @@ workflows:
       firebase:
         firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
         android:
-          app_id: 1:782776044559:android:ccea9ba085ff1892c5e77a
+          app_id: 1:58082583887:android:00abf24c426e3f18e5113a
           groups:
-            - ihsane
+            - androidTesters
       # See the following link for details about email publishing - https://docs.codemagic.io/publishing-yaml/distribution/#email
 
      # email:

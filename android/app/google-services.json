@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "782776044559",
-    "project_id": "weather-app-319f4",
-    "storage_bucket": "weather-app-319f4.appspot.com"
+    "project_number": "58082583887",
+    "project_id": "my-weather-app-f5770",
+    "storage_bucket": "my-weather-app-f5770.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:782776044559:android:ccea9ba085ff1892c5e77a",
+        "mobilesdk_app_id": "1:58082583887:android:00abf24c426e3f18e5113a",
         "android_client_info": {
           "package_name": "com.jamiiltech.ihsane_weather"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBiBbtBjZ6KemQnC9Q1vYqjXeOIdX_bFjU"
+          "current_key": "AIzaSyAo6GehYIlXGg-2lOe8qAh7hHGV3O_kFwU"
         }
       ],
       "services": {
