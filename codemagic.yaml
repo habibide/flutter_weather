@@ -45,7 +45,7 @@ workflows:
           minor=$(echo $current_version | cut -d. -f2)
           echo "Minor: $minor"
           patch=$(echo $current_version | cut -d. -f3)
-          echo "Patch: $path"
+          echo "Patch: $patch"
           new_patch=$((patch + 1))
           new_version="$major.$minor.$new_patch"
           echo "Version before increment: $current_version"
