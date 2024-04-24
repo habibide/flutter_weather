@@ -50,7 +50,11 @@ workflows:
           new_version="$major.$minor.$new_patch"
           echo "Version before increment: $current_version"
           echo "New version: $new_version"
+          current_version=$(grep -E '^version:' pubspec.yaml | awk '{print $2}')
+          new_version=$(echo $current_version | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
+          cp pubspec.yaml pubspec.yaml.bak
           sed -i '' "s/^version:.*$/version: $new_version/" pubspec.yaml
+          
 
 
       - name: Build APK with Flutter
