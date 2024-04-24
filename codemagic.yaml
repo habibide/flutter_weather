@@ -46,7 +46,8 @@ workflows:
           new_version="$major.$minor.$new_patch"
           echo "Version before increment: $current_version"
           echo "New version: $new_version"
-          sed -i '' -e "s/version: $current_version/version: $new_version/g" pubspec.yaml
+          sed -i "s/^version:.*$/version: $new_version/" pubspec.yaml
+
       - name: Build APK with Flutter
         script: |
           flutter build apk --release
