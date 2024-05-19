@@ -8,7 +8,7 @@ workflows:
         - firebase_credentials
         - google_credentials
       android_signing:
-        - weathercodemagic
+        - jamiilkey1
       flutter: stable
     triggering:
       events:
